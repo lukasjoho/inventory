@@ -44,7 +44,7 @@ const CategoryBadge: FC<CategoryBadgeProps> = ({ category }) => {
   if (!category) {
     return "-";
   }
-  return <Badge variant="secondary">{category.label}</Badge>;
+  return <Badge variant="secondary">{category.name}</Badge>;
 };
 
 interface VisibilityIndicatorProps {

@@ -4,7 +4,7 @@ export const seedProducts = [
     description: "Wireless portable speaker with a long battery life.",
     price: 100,
     stock: 22,
-    categoryId: "clk9lfdtr0001hng1y7iciqsd",
+    categoryId: null,
     visibility: false,
   },
   {
@@ -13,7 +13,7 @@ export const seedProducts = [
       "High-performance gaming mouse with customizable RGB lighting.",
     price: 60,
     stock: 15,
-    categoryId: "clk9lfdtr0002hng1rzk1rpol",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -21,7 +21,7 @@ export const seedProducts = [
     description: "27-inch Ultra HD monitor with crisp and clear visuals.",
     price: 350,
     stock: 10,
-    categoryId: "clk9lfdtr0001hng1y7iciqsd",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -29,7 +29,7 @@ export const seedProducts = [
     description: "Fashionable sunglasses with UV protection.",
     price: 25,
     stock: 30,
-    categoryId: "clk9lfdtr0002hng1rzk1rpol",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -37,7 +37,7 @@ export const seedProducts = [
     description: "Control your devices remotely with this smart Wi-Fi plug.",
     price: 20,
     stock: 50,
-    categoryId: "clk9lfdtr0001hng1y7iciqsd",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -45,7 +45,7 @@ export const seedProducts = [
     description: "Elegant leather wallet with multiple card slots.",
     price: 50,
     stock: 18,
-    categoryId: "clk9lfdtr0002hng1rzk1rpol",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -53,7 +53,7 @@ export const seedProducts = [
     description: "Graphics tablet for artists and designers.",
     price: 120,
     stock: 8,
-    categoryId: "clk9lfdtr0002hng1rzk1rpol",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -61,7 +61,7 @@ export const seedProducts = [
     description: "True wireless earbuds with noise-cancellation.",
     price: 80,
     stock: 25,
-    categoryId: "clk9lfdtr0001hng1y7iciqsd",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -69,7 +69,7 @@ export const seedProducts = [
     description: "High-end DSLR camera for photography enthusiasts.",
     price: 1200,
     stock: 5,
-    categoryId: "clk9lfdtr0001hng1y7iciqsd",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -77,7 +77,7 @@ export const seedProducts = [
     description: "Slim and portable Bluetooth keyboard for mobile devices.",
     price: 40,
     stock: 20,
-    categoryId: "clk9lfdtr0001hng1y7iciqsd",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -85,7 +85,7 @@ export const seedProducts = [
     description: "Exquisite fountain pen with a gold nib.",
     price: 100,
     stock: 12,
-    categoryId: "clk9lfdtr0002hng1rzk1rpol",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -93,7 +93,7 @@ export const seedProducts = [
     description: "Monitor your home remotely with this smart security camera.",
     price: 90,
     stock: 15,
-    categoryId: "clk9nmc6s0000hnbneiokcu1x",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -101,7 +101,7 @@ export const seedProducts = [
     description: "Elegant leather briefcase for professionals.",
     price: 160,
     stock: 10,
-    categoryId: "clk9nmc6s0000hnbneiokcu1x",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -109,7 +109,7 @@ export const seedProducts = [
     description: "Ergonomic wireless gaming controller for PC and consoles.",
     price: 70,
     stock: 18,
-    categoryId: "clk9nmc6s0000hnbneiokcu1x",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -118,7 +118,7 @@ export const seedProducts = [
       "High-quality wireless headphones with active noise cancellation.",
     price: 150,
     stock: 25,
-    categoryId: "clk9lfdtr0002hng1rzk1rpol",
+    categoryId: null,
     visibility: true,
   },
   {
@@ -127,7 +127,19 @@ export const seedProducts = [
       "Smartwatch with fitness tracking features and heart rate monitoring.",
     price: 90,
     stock: 20,
-    categoryId: "clk9lfdtr0002hng1rzk1rpol",
+    categoryId: null,
     visibility: true,
+  },
+];
+
+export const seedCategories = [
+  {
+    name: "Audio",
+  },
+  {
+    name: "Video",
+  },
+  {
+    name: "Fitness",
   },
 ];

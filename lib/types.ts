@@ -9,10 +9,13 @@ export interface Product {
 
 export interface ServerProduct extends Product {
   id: string;
+  category: ServerCategory;
 }
 
 export interface Category {
+  name: string;
+}
+
+export interface ServerCategory extends Category {
   id: string;
-  value: string;
-  label: string;
 }

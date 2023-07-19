@@ -1,3 +1,5 @@
+import { Category } from "./types";
+
 export const createProduct = async (product: any) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products`, {
     method: "POST",
@@ -41,4 +43,29 @@ export const deleteProduct = async (productId: any) => {
     }),
   });
   return res;
+};
+
+export const createManyCategories = async (categories: Category[]) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST_URL}/api/categories`,
+    {
+      method: "POST",
+      body: JSON.stringify(categories),
+    }
+  );
+  return res;
+};
+
+export const getCategories = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST_URL}/api/categories`,
+    {
+      cache: "no-store",
+    }
+  );
+  let categories = [];
+  if (res.ok) {
+    categories = await res.json();
+  }
+  return categories;
 };

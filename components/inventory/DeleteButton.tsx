@@ -34,7 +34,6 @@ const DeleteButton: FC<DeleteButtonProps> = ({
     e.preventDefault();
 
     const res = await deleteProduct(product?.id);
-    console.log("ID: ", product?.id);
     if (res.ok) {
       toast.success(
         <ToastBody title="Success" message="Product successfully deleted." />

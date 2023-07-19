@@ -23,7 +23,6 @@ model Product {
 
 model Category {
   id    String  @id @default(cuid())
-  value String @unique
-  label String
+  name String @unique
   product Product[]
 }

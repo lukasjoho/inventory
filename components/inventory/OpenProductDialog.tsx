@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import CategoryOptions from "./CategoryOptions";
 
 interface OpenProductDialogProps {
   product?: Product;
@@ -41,7 +42,11 @@ const OpenProductDialog: FC<OpenProductDialogProps> = ({
                 {product ? "Edit product" : "Create product"}
               </DialogTitle>
             </DialogHeader>
-            <ProductForm product={product} setOpen={setOpen} />
+            <ProductForm
+              product={product}
+              setOpen={setOpen}
+              categoryOptions={<CategoryOptions />}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -54,7 +59,11 @@ const OpenProductDialog: FC<OpenProductDialogProps> = ({
                 {product ? "Edit product" : "Create product"}
               </SheetTitle>
             </SheetHeader>
-            <ProductForm product={product} setOpen={setOpen} />
+            <ProductForm
+              product={product}
+              setOpen={setOpen}
+              categoryOptions={<CategoryOptions />}
+            />
           </SheetContent>
         </Sheet>
       </div>

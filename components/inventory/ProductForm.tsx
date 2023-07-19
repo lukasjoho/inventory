@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -25,19 +25,14 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Product, ServerProduct } from "@/lib/types";
-import { createProduct, updateProduct } from "@/lib/db";
+import { createProduct, getCategories, updateProduct } from "@/lib/db";
 import { toast } from "react-hot-toast";
 import ToastBody from "../ui/toastbody";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import DeleteButton from "./DeleteButton";
-
-const categorySchema = z.object({
-  id: z.string(),
-  value: z.string(),
-  label: z.string(),
-});
+import CategoryOptions from "./CategoryOptions";
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),
@@ -53,6 +48,20 @@ interface ProductFormProps {
   setOpen?: (arg: boolean) => void;
 }
 const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categories = await getCategories();
+        setCategories(categories);
+        // Do something with the fetched data (e.g., set it to a state variable)
+      } catch (error) {
+        // Handle any errors that occurred during the data fetching process
+      }
+    };
+
+    fetchCategories();
+  }, []);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { id, name, description, stock, price, visibility, category } =
@@ -230,15 +239,7 @@ const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="clk9lfdtr0001hng1y7iciqsd">
-                      Electronics
-                    </SelectItem>
-                    <SelectItem value="clk9lfdtr0002hng1rzk1rpol">
-                      Arts and Crafts
-                    </SelectItem>
-                    <SelectItem value="clk9nmc6s0000hnbneiokcu1x">
-                      Outdoors
-                    </SelectItem>
+                    <CategoryOptions options={categories} />
                   </SelectContent>
                 </Select>
                 <FormMessage />

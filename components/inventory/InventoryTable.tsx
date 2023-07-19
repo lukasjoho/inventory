@@ -9,6 +9,7 @@ import React from "react";
 
 import { getProducts } from "@/lib/db";
 import TableRowWithModal from "./TableRowWithModal";
+import SeedButton from "./SeedButton";
 
 const InventoryTable = async () => {
   let products: any = [];
@@ -16,7 +17,6 @@ const InventoryTable = async () => {
   products = await getProducts();
   return (
     <div className="border rounded-lg">
-      <pre>{JSON.stringify(products, null, 2)}</pre>
       <Table>
         <TableHeader>
           <TableRow>
@@ -35,6 +35,15 @@ const InventoryTable = async () => {
           })}
         </TableBody>
       </Table>
+      {products.length < 1 && (
+        <div className="w-full px-4 py-16 flex flex-col items-center text-center gap-2">
+          <div>
+            <h1 className="font-semibold text-lg">Empty table</h1>
+            <p>No products are in the database.</p>
+          </div>
+          <SeedButton />
+        </div>
+      )}
     </div>
   );
 };
