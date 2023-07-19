@@ -30,8 +30,8 @@ const InventoryTable = async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product: any) => {
-            return <TableRowWithModal product={product} />;
+          {products.map((product: any, idx: number) => {
+            return <TableRowWithModal product={product} key={idx} />;
           })}
         </TableBody>
       </Table>
