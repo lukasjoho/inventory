@@ -1,15 +1,12 @@
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { convertIntToDollar } from "@/lib/helpers";
 import React from "react";
-import { Switch } from "../ui/switch";
-import { Badge } from "../ui/badge";
+
 import { getProducts } from "@/lib/db";
 import TableRowWithModal from "./TableRowWithModal";
 
