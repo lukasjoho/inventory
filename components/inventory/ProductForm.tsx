@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -53,6 +53,7 @@ interface ProductFormProps {
   setOpen?: (arg: boolean) => void;
 }
 const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { id, name, description, stock, price, visibility, category } =
     product ?? {};
@@ -69,6 +70,7 @@ const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
   });
 
   async function onSubmit(values: any) {
+    setIsSubmitting(true);
     Object.keys(values).forEach((key) => {
       if (values[key] === undefined || values[key] === "") {
         values[key] = null;
@@ -86,10 +88,13 @@ const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
         toast.success(
           <ToastBody title="Success" message="Product updated successfully." />
         );
+        setIsSubmitting(false);
+
         router.refresh();
         setOpen?.(false);
       } else {
         const errorResponse = await res.json();
+        setIsSubmitting(false);
 
         toast.error(
           <ToastBody title="Failure" message={errorResponse.message} />
@@ -100,10 +105,13 @@ const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
         toast.success(
           <ToastBody title="Success" message="Product created successfully." />
         );
+        setIsSubmitting(false);
+
         router.refresh();
         setOpen?.(false);
       } else {
         const errorResponse = await res.json();
+        setIsSubmitting(false);
 
         toast.error(
           <ToastBody title="Failure" message={errorResponse.message} />
@@ -240,8 +248,18 @@ const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
         </div>
         <div className="flex justify-between">
           {product && <DeleteButton product={product} setOpen={setOpen} />}
-          <Button type="submit" className={cn(!product && "w-full")}>
-            {product ? "Update" : "Create"}
+          <Button
+            type="submit"
+            className={cn(!product && "w-full")}
+            disabled={isSubmitting}
+          >
+            {product
+              ? isSubmitting
+                ? "Updating..."
+                : "Update"
+              : isSubmitting
+              ? "Creating..."
+              : "Create"}
           </Button>
         </div>
       </form>

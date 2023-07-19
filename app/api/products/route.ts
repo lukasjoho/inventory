@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     if (error.code === "P2002") {
       return NextResponse.json(
-        { status: "failed", message: "Product already exists" },
+        { status: "failed", message: "Product with this name already exists" },
         {
           status: 409,
         }

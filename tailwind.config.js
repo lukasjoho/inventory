@@ -9,6 +9,21 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        custbounce: {
+          "0%, 100%": {
+            transform: "translateY(-50%)",
+            "animation-timing-function": "cubic-bezier(0.8, 0, 1, 1)",
+          },
+          "50%": {
+            transform: "translateY(50%)",
+            "animation-timing-function": "cubic-bezier(0, 0, 0.2, 1)",
+          },
+        },
+      },
+      animation: {
+        custbounce: "custbounce 0.6s infinite",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

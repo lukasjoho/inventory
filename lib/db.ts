@@ -6,6 +6,14 @@ export const createProduct = async (product: any) => {
   return res;
 };
 
+export const createManyProducts = async (products: any) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products`, {
+    method: "POST",
+    body: JSON.stringify(products),
+  });
+  return res;
+};
+
 export const getProducts = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products`, {
     cache: "no-store",
@@ -28,14 +36,6 @@ export const deleteProduct = async (productId: any) => {
     body: JSON.stringify({
       id: productId,
     }),
-  });
-  return res;
-};
-
-export const createManyProducts = async (products: any) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products`, {
-    method: "POST",
-    body: products,
   });
   return res;
 };
