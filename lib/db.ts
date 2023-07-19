@@ -18,7 +18,10 @@ export const getProducts = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products`, {
     cache: "no-store",
   });
-  const products = await res.json();
+  let products = [];
+  if (res.ok) {
+    products = await res.json();
+  }
   return products;
 };
 

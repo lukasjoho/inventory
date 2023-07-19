@@ -11,9 +11,12 @@ import { getProducts } from "@/lib/db";
 import TableRowWithModal from "./TableRowWithModal";
 
 const InventoryTable = async () => {
-  const products = await getProducts();
+  let products: any = [];
+
+  products = await getProducts();
   return (
     <div className="border rounded-lg">
+      <pre>{JSON.stringify(products, null, 2)}</pre>
       <Table>
         <TableHeader>
           <TableRow>
@@ -27,7 +30,7 @@ const InventoryTable = async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product: any, idx: number) => {
+          {products?.map((product: any, idx: number) => {
             return <TableRowWithModal product={product} key={idx} />;
           })}
         </TableBody>
