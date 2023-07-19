@@ -15,7 +15,7 @@ export const getProducts = async () => {
 };
 
 export const updateProduct = async (product: any) => {
-  const res = await fetch(`${process.env.next_public_host_url}/api/products`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products`, {
     method: "PUT",
     body: JSON.stringify(product),
   });
