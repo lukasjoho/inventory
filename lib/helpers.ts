@@ -1,6 +1,6 @@
-export function convertIntToDollar(value: number) {
+export function convertIntToDollar(value: number | undefined) {
   if (typeof value !== "number") {
-    throw new Error("Input must be a number");
+    return null;
   }
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",

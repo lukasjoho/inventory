@@ -10,8 +10,11 @@ import { convertIntToDollar } from "@/lib/helpers";
 import React from "react";
 import { Switch } from "../ui/switch";
 import { Badge } from "../ui/badge";
+import { getProducts } from "@/lib/db";
+import TableRowWithModal from "./TableRowWithModal";
 
-const InventoryTable = () => {
+const InventoryTable = async () => {
+  const products = await getProducts();
   return (
     <div className="border rounded-lg">
       <Table>
@@ -27,21 +30,9 @@ const InventoryTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell>cd12380kdjkasd0</TableCell>
-            <TableCell className="font-medium">Portable Speaker</TableCell>
-            <TableCell>
-              Wireless portable speaker with a long battery life.
-            </TableCell>
-            <TableCell>{convertIntToDollar(80)}</TableCell>
-            <TableCell>18</TableCell>
-            <TableCell>
-              <Switch />
-            </TableCell>
-            <TableCell>
-              <Badge variant="secondary">Audio</Badge>
-            </TableCell>
-          </TableRow>
+          {products.map((product: any) => {
+            return <TableRowWithModal product={product} />;
+          })}
         </TableBody>
       </Table>
     </div>

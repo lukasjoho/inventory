@@ -1,0 +1,252 @@
+"use client";
+
+import React, { FC } from "react";
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { Switch } from "../ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Product, ServerProduct } from "@/lib/types";
+import { createProduct, updateProduct } from "@/lib/db";
+import { toast } from "react-hot-toast";
+import ToastBody from "../ui/toastbody";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import DeleteButton from "./DeleteButton";
+
+const categorySchema = z.object({
+  id: z.string(),
+  value: z.string(),
+  label: z.string(),
+});
+
+const formSchema = z.object({
+  name: z.string().min(2).max(100),
+  description: z.string().min(2).max(1000).optional(),
+  price: z.number().optional(),
+  stock: z.number().optional(),
+  visibility: z.boolean(),
+  categoryId: z.string().optional(),
+});
+
+interface ProductFormProps {
+  product?: ServerProduct;
+  setOpen?: (arg: boolean) => void;
+}
+const ProductForm: FC<ProductFormProps> = ({ product, setOpen }) => {
+  const router = useRouter();
+  const { id, name, description, stock, price, visibility, category } =
+    product ?? {};
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: name || undefined,
+      description: description || undefined,
+      price: price || undefined,
+      stock: stock || undefined,
+      visibility: visibility || false,
+      categoryId: category?.id || undefined,
+    },
+  });
+
+  async function onSubmit(values: any) {
+    Object.keys(values).forEach((key) => {
+      if (values[key] === undefined || values[key] === "") {
+        values[key] = null;
+      }
+    });
+    console.log(values);
+    let res;
+    if (product) {
+      res = await updateProduct({ id: product.id, ...values });
+    } else {
+      res = await createProduct(values);
+    }
+    if (product) {
+      if (res.ok) {
+        toast.success(
+          <ToastBody title="Success" message="Product updated successfully." />
+        );
+        router.refresh();
+        setOpen?.(false);
+      } else {
+        const errorResponse = await res.json();
+
+        toast.error(
+          <ToastBody title="Failure" message={errorResponse.message} />
+        );
+      }
+    } else {
+      if (res.ok) {
+        toast.success(
+          <ToastBody title="Success" message="Product created successfully." />
+        );
+        router.refresh();
+        setOpen?.(false);
+      } else {
+        const errorResponse = await res.json();
+
+        toast.error(
+          <ToastBody title="Failure" message={errorResponse.message} />
+        );
+      }
+    }
+  }
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 md:space-y-8"
+      >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter name..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter description..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="grid gap-4 md:gap-8 grid-cols-2">
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter price"
+                    type="number"
+                    min="0"
+                    step="1"
+                    {...form.register("price", {
+                      setValueAs: (v) =>
+                        v === "" ? undefined : parseInt(v, 10),
+                    })}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="stock"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Stock</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Enter stock"
+                    min="0"
+                    step="1"
+                    {...form.register("stock", {
+                      setValueAs: (v) =>
+                        v === "" ? undefined : parseInt(v, 10),
+                    })}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="visibility"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Visibility</FormLabel>
+                <FormControl>
+                  <div>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Enter category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="clk9lfdtr0001hng1y7iciqsd">
+                      Electronics
+                    </SelectItem>
+                    <SelectItem value="clk9lfdtr0002hng1rzk1rpol">
+                      Arts and Crafts
+                    </SelectItem>
+                    <SelectItem value="clk9nmc6s0000hnbneiokcu1x">
+                      Outdoors
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex justify-between">
+          {product && <DeleteButton product={product} setOpen={setOpen} />}
+          <Button type="submit" className={cn(!product && "w-full")}>
+            {product ? "Update" : "Create"}
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+};
+
+export default ProductForm;
