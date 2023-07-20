@@ -42,11 +42,7 @@ const OpenProductDialog: FC<OpenProductDialogProps> = ({
                 {product ? "Edit product" : "Create product"}
               </DialogTitle>
             </DialogHeader>
-            <ProductForm
-              product={product}
-              setOpen={setOpen}
-              categoryOptions={<CategoryOptions />}
-            />
+            <ProductForm product={product} setOpen={setOpen} />
           </DialogContent>
         </Dialog>
       </div>
@@ -59,11 +55,7 @@ const OpenProductDialog: FC<OpenProductDialogProps> = ({
                 {product ? "Edit product" : "Create product"}
               </SheetTitle>
             </SheetHeader>
-            <ProductForm
-              product={product}
-              setOpen={setOpen}
-              categoryOptions={<CategoryOptions />}
-            />
+            <ProductForm product={product} setOpen={setOpen} />
           </SheetContent>
         </Sheet>
       </div>
