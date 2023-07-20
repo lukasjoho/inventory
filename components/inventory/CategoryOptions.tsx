@@ -1,7 +1,6 @@
-import { Category } from "@/lib/types";
+import { ServerCategory } from "@/lib/types";
 import React from "react";
 import { SelectItem } from "../ui/select";
-import { getCategories } from "@/lib/db";
 
 const CategoryOptions = ({ options }: any) => {
   if (!options) {
@@ -9,7 +8,7 @@ const CategoryOptions = ({ options }: any) => {
   }
   return (
     <div>
-      {options.map((category: Category, idx: number) => {
+      {options.map((category: ServerCategory, idx: number) => {
         return (
           <SelectItem key={idx} value={category.id}>
             {category.name}
